@@ -22,7 +22,7 @@ class YbCustomer {
         $this->socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
 
         if($this->socket < 0) {
-            throw new Exception(socket_strerror($this->socket));
+            die(socket_strerror($this->socket));
         }
 
         $this->connect();
@@ -33,11 +33,11 @@ class YbCustomer {
         $result = socket_connect($this->socket, $this->host, $this->port);
 
         if($result < 0) {
-            throw new Exception(socket_strerror($this->socket));
+            die(socket_strerror($this->socket));
         }
     }
 
-    protected function sendSub($topic = 'default_topic')
+    public function sendSub($topic = 'default_topic')
     {
         $data = json_encode([
             'model' => 'sub',
@@ -45,7 +45,7 @@ class YbCustomer {
         ]);
 
         if(!socket_write($this->socket, $data, strlen($data))) {
-            throw new Exception(socket_strerror($this->socket));
+            die(socket_strerror($this->socket));
         }
     }
 
@@ -65,3 +65,7 @@ class YbCustomer {
         socket_close($this->socket);
     }
 }
+
+$ybCustomer = new YbCustomer('127.0.0.1');
+$ybCustomer->sendSub();
+var_dump($ybCustomer->subscribe());

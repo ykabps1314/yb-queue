@@ -13,6 +13,8 @@ class YbProducer {
 
     protected $port;
 
+    protected $topic;
+
     public function __construct($host, $port = 9901)
     {
         //初始化连接配置
@@ -22,7 +24,7 @@ class YbProducer {
         $this->socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
 
         if($this->socket < 0) {
-            throw new Exception(socket_strerror($this->socket));
+            die(socket_strerror($this->socket));
         }
 
         $this->connect();
@@ -33,17 +35,24 @@ class YbProducer {
         $result = socket_connect($this->socket, $this->host, $this->port);
 
         if($result < 0) {
-            throw new Exception(socket_strerror($this->socket));
+            die(socket_strerror($this->socket));
         }
+    }
+
+    public function setTopic($topic = 'default_topic')
+    {
+        $this->topic = $topic;
     }
 
     public function publish($data)
     {
-        if(!is_string($data))
-            $data = json_encode($data);
+        $pubData = json_encode([
+            'topic' => $this->topic,
+            'data' => $data,
+        ]);
 
-        if(!socket_write($this->socket, $data, strlen($data))) {
-            throw new Exception(socket_strerror($this->socket));
+        if(!socket_write($this->socket, $pubData, strlen($data))) {
+            die(socket_strerror($this->socket));
         }
     }
 
@@ -51,4 +60,12 @@ class YbProducer {
     {
         socket_close($this->socket);
     }
+}
+
+$ybProducer = new YbProducer('127.0.0.1');
+$ybProducer->setTopic();
+
+for ($i = 1;$i < 10;$i++) {
+    $ybProducer->publish(['test' => $i]);
+    sleep(1);
 }

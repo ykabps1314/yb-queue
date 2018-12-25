@@ -5,7 +5,7 @@
  * Time: 10:26
  */
 
-require __DIR__.'RedisTopic.php';
+require __DIR__.'/RedisTopic.php';
 
 class QueueServer {
 

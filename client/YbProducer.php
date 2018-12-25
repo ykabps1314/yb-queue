@@ -23,8 +23,8 @@ class YbProducer {
 
         $this->socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
 
-        if($this->socket < 0) {
-            die(socket_strerror($this->socket));
+        if(!$this->socket) {
+            die(socket_strerror(socket_last_error()));
         }
 
         $this->connect();
@@ -34,8 +34,8 @@ class YbProducer {
     {
         $result = socket_connect($this->socket, $this->host, $this->port);
 
-        if($result < 0) {
-            die(socket_strerror($this->socket));
+        if(!$result) {
+            die(socket_strerror(var_export(socket_last_error(), true)));
         }
     }
 
@@ -52,7 +52,7 @@ class YbProducer {
         ]);
 
         if(!socket_write($this->socket, $pubData, strlen($pubData))) {
-            die(socket_strerror($this->socket));
+            die(socket_strerror(var_export(socket_last_error(), true)));
         }
     }
 

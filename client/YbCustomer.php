@@ -21,8 +21,8 @@ class YbCustomer {
 
         $this->socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
 
-        if($this->socket < 0) {
-            die(socket_strerror($this->socket));
+        if(!$this->socket) {
+            die(socket_strerror(var_export(socket_last_error(), true)));
         }
 
         $this->connect();
@@ -32,8 +32,8 @@ class YbCustomer {
     {
         $result = socket_connect($this->socket, $this->host, $this->port);
 
-        if($result < 0) {
-            die(socket_strerror($this->socket));
+        if(!$result) {
+            die(socket_strerror(var_export(socket_last_error(), true)));
         }
     }
 
@@ -45,7 +45,7 @@ class YbCustomer {
         ]);
 
         if(!socket_write($this->socket, $data, strlen($data))) {
-            die(socket_strerror($this->socket));
+            die(socket_strerror(var_export(socket_last_error(), true)));
         }
     }
 

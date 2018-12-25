@@ -5,6 +5,8 @@
  * Time: 10:26
  */
 
+require __DIR__.'RedisTopic.php';
+
 class QueueServer {
 
     public $server;

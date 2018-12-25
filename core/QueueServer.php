@@ -27,11 +27,11 @@ class QueueServer {
         $sConfig      = $config['server'];
         $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port']);
 
-        $this->server->on('start', [static::class, 'start']);
-        $this->server->on('open', [static::class, 'open']);
-        $this->server->on('request', [static::class, 'request']);
-        $this->server->on('message', [static::class, 'message']);
-        $this->server->on('close', [static::class, 'close']);
+        $this->server->on('start', [$this, 'start']);
+        $this->server->on('open', [$this, 'open']);
+        $this->server->on('request', [$this, 'request']);
+        $this->server->on('message', [$this, 'message']);
+        $this->server->on('close', [$this, 'close']);
     }
 
     public function start(Swoole\WebSocket\Server $server)

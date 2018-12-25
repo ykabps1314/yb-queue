@@ -61,6 +61,8 @@ class QueueServer {
     {
         $message = json_decode($request->get['message'], true);
 
+        var_dump($message);
+
         if(isset($message['topic']) && !empty($message['data']) && isset($this->queue[$message['topic']])) {
             $this->queue[$message['topic']]->enqueue($message['data']);
         }

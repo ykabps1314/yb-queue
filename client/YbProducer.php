@@ -51,7 +51,7 @@ class YbProducer {
             'data' => $data,
         ]);
 
-        if(!socket_write($this->socket, $pubData, strlen($pubData))) {
+        if(!socket_write($this->socket, $pubData)) {
             die(socket_strerror(var_export(socket_last_error(), true)));
         }
     }

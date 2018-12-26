@@ -15,6 +15,8 @@ class YbProducer {
 
     protected $topic;
 
+    protected $linkStatus = false;
+
     public function __construct($host, $port = 9901, $topic = 'default_topic')
     {
         //初始化连接配置
@@ -34,6 +36,7 @@ class YbProducer {
 
     public function connect(Swoole\Client $cli)
     {
+        $this->linkStatus = true;
         echo '连接成功'.PHP_EOL;
     }
 
@@ -54,6 +57,10 @@ class YbProducer {
 
     public function sendMsg($data)
     {
+        while (!$this->linkStatus) {
+            sleep(1);
+        }
+
         $pubData = json_encode([
             'topic' => $this->topic,
             'data' => $data,

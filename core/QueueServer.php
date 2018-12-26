@@ -61,9 +61,8 @@ class QueueServer {
 
     public function request($request, $response)
     {
+        var_dump($request->get);
         $message = json_decode($request->get['message'], true);
-
-        var_dump($message);
 
         if(isset($message['topic']) && !empty($message['data']) && isset($this->queue[$message['topic']])) {
             $this->queue[$message['topic']]->enqueue($message['data']);
@@ -72,6 +71,7 @@ class QueueServer {
 
     public function message(Swoole\WebSocket\Server $server, $frame)
     {
+        var_dump($frame->data);
         $rData = json_decode($frame->data, true);
 
         if(isset($rData['model']) && $rData['model'] == 'sub' && $rData['topic']) {

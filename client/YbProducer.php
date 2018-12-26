@@ -24,32 +24,7 @@ class YbProducer {
 
         $this->client = new Swoole\Client(SWOOLE_SOCK_TCP);
 
-        $this->client->on('connect', [$this, 'connect']);
-        $this->client->on('receive', [$this, 'receive']);
-        $this->client->on('error', [$this, 'error']);
-        $this->client->on('close', [$this, 'close']);
-
-        $this->client->connect($this->host, $this->port);
-    }
-
-    public function connect(Swoole\Client $cli)
-    {
-        echo '连接成功'.PHP_EOL;
-    }
-
-    public function receive(Swoole\Client $cli, $data)
-    {
-
-    }
-
-    public function error(Swoole\Client $cli)
-    {
-        die('发生错误');
-    }
-
-    public function close(Swoole\Client $cli)
-    {
-
+        $this->client->connect($this->host, $this->port, -1);
     }
 
     public function sendMsg($data)

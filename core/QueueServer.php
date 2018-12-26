@@ -27,24 +27,42 @@ class QueueServer {
 
         //绑定的服务
         $sConfig      = $config['server'];
-        $this->server = new swoole_websocket_server($sConfig['host'], $sConfig['port']);
+        $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port']);
 
-        $this->server->on('open', [$this, 'open']);
+        $this->server->on('start', [$this, 'start']);
+        $this->server->on('work', [$this, 'start']);
+        $this->server->on('open', function(Swoole\WebSocket\Server $server, $request) {
+            var_dump($request);
+            shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
+        });
+        $this->server->on('request', [$this, 'request']);
         $this->server->on('message', [$this, 'message']);
         $this->server->on('close', [$this, 'close']);
-//        $this->server->on('request', [$this, 'request']);
 
         $this->server->start();
     }
 
-    public function setQueues($queues)
+    public function start(Swoole\WebSocket\Server $server)
     {
-        $this->queue = $queues;
+        echo '我已经启动了'.PHP_EOL;
+
+        if(empty($this->config['redis'])) {
+            die('redis config lack');
+        }
+        $redis     = new RedisTopic($this->config['redis']);
+        $allTopics = $redis->getAllTopic();
+        var_dump($allTopics);
+
+        foreach ($allTopics as $topic) {
+            $queue = new SplQueue();
+            $queue->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO);
+
+            $this->queue[$topic] = $queue;
+        }
     }
 
-    public function open(swoole_websocket_server $server, $request)
+    public function open(Swoole\WebSocket\Server $server, $request)
     {
-        var_dump($request);
         shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
     }
 
@@ -58,7 +76,7 @@ class QueueServer {
         }
     }
 
-    public function message(swoole_websocket_server $server, $frame)
+    public function message(Swoole\WebSocket\Server $server, $frame)
     {
         var_dump($frame->data);
         $rData = json_decode($frame->data, true);
@@ -70,7 +88,7 @@ class QueueServer {
         }
     }
 
-    public function close(swoole_websocket_server $server, $fd)
+    public function close(Swoole\WebSocket\Server $server, $fd)
     {
         shell_exec('echo \'client: fd{'.$fd.'} close\r\n\' > /root/yb-close.log');
     }

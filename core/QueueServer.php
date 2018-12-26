@@ -27,7 +27,7 @@ class QueueServer {
 
         //绑定的服务
         $sConfig      = $config['server'];
-        $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port']);
+        $this->server = new swoole_websocket_server($sConfig['host'], $sConfig['port']);
 
         $this->server->on('open', [$this, 'open']);
         $this->server->on('message', [$this, 'message']);
@@ -42,7 +42,7 @@ class QueueServer {
         $this->queue = $queues;
     }
 
-    public function open(Swoole\WebSocket\Server $server, $request)
+    public function open(swoole_websocket_server $server, $request)
     {
         var_dump($request);
         shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
@@ -58,7 +58,7 @@ class QueueServer {
         }
     }
 
-    public function message(Swoole\WebSocket\Server $server, $frame)
+    public function message(swoole_websocket_server $server, $frame)
     {
         var_dump($frame->data);
         $rData = json_decode($frame->data, true);
@@ -70,7 +70,7 @@ class QueueServer {
         }
     }
 
-    public function close(Swoole\WebSocket\Server $server, $fd)
+    public function close(swoole_websocket_server $server, $fd)
     {
         shell_exec('echo \'client: fd{'.$fd.'} close\r\n\' > /root/yb-close.log');
     }

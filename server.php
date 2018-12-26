@@ -7,7 +7,7 @@ if(empty($config['redis'])) {
     die('redis config lack');
 }
 
-$redis     = new RedisTopic($this->config['redis']);
+$redis     = new RedisTopic($config['redis']);
 $allTopics = $redis->getAllTopic();
 $queues = [];
 foreach ($allTopics as $topic) {

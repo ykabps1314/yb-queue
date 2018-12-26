@@ -27,7 +27,7 @@ class QueueServer {
 
         //绑定的服务
         $sConfig      = $config['server'];
-        $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port']);
+        $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port'], SWOOLE_PROCESS, SWOOLE_SOCK_TCP);
 
         $this->server->on('workerStart', [$this, 'workerStart']);
         $this->server->on('open', function(Swoole\WebSocket\Server $server, $request) {

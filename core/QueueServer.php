@@ -56,6 +56,7 @@ class QueueServer {
 
     public function open(Swoole\WebSocket\Server $server, $request)
     {
+        var_dump($request);
         shell_exec('echo \'server: handshake success with fd{$request->fd}\r\n\' > /root/yb-request.log');
     }
 

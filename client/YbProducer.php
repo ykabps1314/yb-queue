@@ -57,4 +57,3 @@ for ($i = 1;$i < 10;$i++) {
     echo '生产第'.$i.'份数据'.PHP_EOL;
     sleep(1);
 }
-$ybProducer->close();

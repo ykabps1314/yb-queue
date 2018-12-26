@@ -46,7 +46,6 @@ class QueueServer {
         }
         $redis     = new RedisTopic($this->config['redis']);
         $allTopics = $redis->getAllTopic();
-        var_dump($allTopics);
 
         foreach ($allTopics as $topic) {
             $queue = new SplQueue();
@@ -60,6 +59,7 @@ class QueueServer {
     {
         shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
 
+        var_dump($request->get['message']);
         $message = json_decode($request->get['message'], true);
 
         if(isset($message['topic']) && !empty($message['data']) && isset($this->queue[$message['topic']])) {
@@ -69,7 +69,6 @@ class QueueServer {
 
     public function message(Swoole\WebSocket\Server $server, $frame)
     {
-        var_dump($frame->data);
         $rData = json_decode($frame->data, true);
 
         if(isset($rData['model']) && $rData['model'] == 'sub' && $rData['topic']) {

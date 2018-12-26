@@ -47,6 +47,14 @@ class YbCustomer {
         if(!socket_write($this->socket, $data, strlen($data))) {
             die(socket_strerror(var_export(socket_last_error(), true)));
         }
+
+        $subData = '';
+
+        while ($out = socket_read($this->socket, 2048)) {
+            $subData .= $out;
+        }
+
+        return $subData;
     }
 
     public function subscribe()

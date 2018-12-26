@@ -32,7 +32,7 @@ class QueueServer {
         $this->server->on('open', [$this, 'open']);
         $this->server->on('message', [$this, 'message']);
         $this->server->on('close', [$this, 'close']);
-        $this->server->on('request', [$this, 'request']);
+//        $this->server->on('request', [$this, 'request']);
 
         $this->server->start();
     }
@@ -44,6 +44,7 @@ class QueueServer {
 
     public function open(Swoole\WebSocket\Server $server, $request)
     {
+        var_dump($request);
         shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
     }
 

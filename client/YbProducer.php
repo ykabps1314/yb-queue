@@ -24,7 +24,7 @@ class YbProducer {
 
         $this->client = new Swoole\Client(SWOOLE_SOCK_TCP);
 
-        $this->client->connect($this->host, $this->port, -1);
+        $this->client->connect($this->host, $this->port, 1000);
     }
 
     public function sendMsg($data)

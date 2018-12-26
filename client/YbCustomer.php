@@ -5,6 +5,8 @@
  * Time: 16:58
  */
 
+require __DIR__.'/WebSocketClient.php';
+
 class YbCustomer {
 
     protected $client;

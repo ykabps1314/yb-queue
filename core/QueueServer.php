@@ -29,37 +29,22 @@ class QueueServer {
         $sConfig      = $config['server'];
         $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port']);
 
-        $this->server->on('start', [$this, 'start']);
         $this->server->on('open', [$this, 'open']);
-        $this->server->on('request', [$this, 'request']);
         $this->server->on('message', [$this, 'message']);
         $this->server->on('close', [$this, 'close']);
+        $this->server->on('request', [$this, 'request']);
 
         $this->server->start();
     }
 
-    public function start(Swoole\WebSocket\Server $server)
+    public function setQueues($queues)
     {
-        echo '我已经启动了'.PHP_EOL;
-
-        if(empty($this->config['redis'])) {
-            die('redis config lack');
-        }
-        $redis     = new RedisTopic($this->config['redis']);
-        $allTopics = $redis->getAllTopic();
-        var_dump($allTopics);
-
-        foreach ($allTopics as $topic) {
-            $queue = new SplQueue();
-            $queue->setIteratorMode(SplDoublyLinkedList::IT_MODE_FIFO);
-
-            $this->queue[$topic] = $queue;
-        }
+        $this->queue = $queues;
     }
 
     public function open(Swoole\WebSocket\Server $server, $request)
     {
-        shell_exec('echo \'server: handshake success with fd{$request->fd}\r\n\' > /root/yb-request.log');
+        shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
     }
 
     public function request($request, $response)

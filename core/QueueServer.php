@@ -38,6 +38,8 @@ class QueueServer {
 
     public function start(Swoole\WebSocket\Server $server)
     {
+        echo '我已经启动了'.PHP_EOL;
+
         if(empty($this->config['redis'])) {
             die('redis config lack');
         }

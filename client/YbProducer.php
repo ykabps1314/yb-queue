@@ -24,11 +24,17 @@ class YbProducer {
 
         $this->client = new Swoole\Client(SWOOLE_SOCK_TCP, SWOOLE_SOCK_ASYNC);
 
+        $this->client->on('connect', [$this, 'connect']);
         $this->client->on('receive', [$this, 'receive']);
         $this->client->on('error', [$this, 'error']);
         $this->client->on('close', [$this, 'close']);
 
         $this->client->connect($this->host, $this->port);
+    }
+
+    public function connect(Swoole\Client $cli)
+    {
+        echo '连接成功'.PHP_EOL;
     }
 
     public function receive(Swoole\Client $cli, $data)
@@ -57,8 +63,8 @@ class YbProducer {
     }
 }
 
+$ybProducer = new YbProducer('127.0.0.1');
 for ($i = 1;$i < 10;$i++) {
-    $ybProducer = new YbProducer('127.0.0.1');
     $ybProducer->sendMsg(['test' => $i]);
     echo '生产第'.$i.'份数据'.PHP_EOL;
     sleep(1);

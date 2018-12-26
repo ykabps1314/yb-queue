@@ -29,7 +29,7 @@ class QueueServer {
         $sConfig      = $config['server'];
         $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port']);
 
-        $this->server->on('start', [$this, 'start']);
+        $this->server->on('workerStart', [$this, 'workerStart']);
         $this->server->on('open', function(Swoole\WebSocket\Server $server, $request) {
             var_dump($request);
             shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
@@ -41,9 +41,9 @@ class QueueServer {
         $this->server->start();
     }
 
-    public function start(Swoole\WebSocket\Server $server)
+    public function workerStart(Swoole\WebSocket\Server $server)
     {
-        echo '我已经启动了'.PHP_EOL;
+        echo '启动队列'.PHP_EOL;
 
         if(empty($this->config['redis'])) {
             die('redis config lack');

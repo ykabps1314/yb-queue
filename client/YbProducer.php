@@ -63,10 +63,9 @@ class YbProducer {
     }
 }
 
-$ybProducer = new YbProducer('127.0.0.1');
-$ybProducer->setTopic();
-
 for ($i = 1;$i < 10;$i++) {
+    $ybProducer = new YbProducer('127.0.0.1');
+    $ybProducer->setTopic();
     $ybProducer->publish(['test' => $i]);
     sleep(1);
 }

@@ -34,6 +34,8 @@ class QueueServer {
         $this->server->on('request', [$this, 'request']);
         $this->server->on('message', [$this, 'message']);
         $this->server->on('close', [$this, 'close']);
+
+        $this->server->start();
     }
 
     public function start(Swoole\WebSocket\Server $server)
@@ -56,7 +58,6 @@ class QueueServer {
 
     public function open(Swoole\WebSocket\Server $server, $request)
     {
-        var_dump($request);
         shell_exec('echo \'server: handshake success with fd{$request->fd}\r\n\' > /root/yb-request.log');
     }
 
@@ -85,10 +86,5 @@ class QueueServer {
     public function close(Swoole\WebSocket\Server $server, $fd)
     {
         shell_exec('echo \'client: fd{'.$fd.'} close\r\n\' > /root/yb-close.log');
-    }
-
-    public function serverStart()
-    {
-        $this->server->start();
     }
 }

@@ -30,7 +30,6 @@ class QueueServer {
         $this->server = new Swoole\WebSocket\Server($sConfig['host'], $sConfig['port']);
 
         $this->server->on('start', [$this, 'start']);
-        $this->server->on('work', [$this, 'start']);
         $this->server->on('open', function(Swoole\WebSocket\Server $server, $request) {
             var_dump($request);
             shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');

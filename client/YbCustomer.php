@@ -7,7 +7,7 @@
 
 class YbCustomer {
 
-    protected $socket;
+    protected $client;
 
     protected $host;
 
@@ -19,21 +19,10 @@ class YbCustomer {
         $this->host = $host;
         $this->port = $port;
 
-        $this->socket = socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
+        $this->client = new WebSocketClient($this->host, $this->port);
 
-        if(!$this->socket) {
-            die(socket_strerror(var_export(socket_last_error(), true)));
-        }
-
-        $this->connect();
-    }
-
-    protected function connect()
-    {
-        $result = socket_connect($this->socket, $this->host, $this->port);
-
-        if(!$result) {
-            die(socket_strerror(var_export(socket_last_error(), true)));
+        if(!$this->client->connect()) {
+            die('connect failed');
         }
     }
 
@@ -44,33 +33,16 @@ class YbCustomer {
             'topic' => $topic
         ]);
 
-        if(!socket_write($this->socket, $data, strlen($data))) {
-            die(socket_strerror(var_export(socket_last_error(), true)));
+        if(!$this->client->send($data)) {
+            return false;
         }
 
-        $subData = '';
-
-        while ($out = socket_read($this->socket, 2048)) {
-            $subData .= $out;
-        }
-
-        return $subData;
+        return true;
     }
 
     public function subscribe()
     {
-        $subData = '';
-
-        while ($out = socket_read($this->socket, 2048)) {
-            $subData .= $out;
-        }
-
-        return $subData;
-    }
-
-    public function close()
-    {
-        socket_close($this->socket);
+        return $this->client->recv();
     }
 }
 

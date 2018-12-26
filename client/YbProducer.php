@@ -44,11 +44,6 @@ class YbProducer {
 
         return true;
     }
-
-    public function close()
-    {
-        $this->client->disconnect();
-    }
 }
 
 $ybProducer = new YbProducer('127.0.0.1');

@@ -39,8 +39,6 @@ class QueueServer {
 
     public function workerStart(Swoole\WebSocket\Server $server)
     {
-        echo '启动队列'.PHP_EOL;
-
         if(empty($this->config['redis'])) {
             die('redis config lack');
         }
@@ -58,21 +56,20 @@ class QueueServer {
     public function open(Swoole\WebSocket\Server $server, $request)
     {
         shell_exec('echo \'server: handshake success with fd{'.$request->fd.'}\r\n\' > /root/yb-request.log');
-
-        var_dump($request->get['message']);
-        $message = json_decode($request->get['message'], true);
-
-        if(isset($message['topic']) && !empty($message['data']) && isset($this->queue[$message['topic']])) {
-            $this->queue[$message['topic']]->enqueue($message['data']);
-        }
     }
 
     public function message(Swoole\WebSocket\Server $server, $frame)
     {
-        $rData = json_decode($frame->data, true);
+        $message = json_decode($frame->data, true);
 
-        if(isset($rData['model']) && $rData['model'] == 'sub' && $rData['topic']) {
-            $data = $this->queue[$rData['topic']]->dequeue();
+        //生产
+        if(isset($message['topic']) && !empty($message['data']) && isset($this->queue[$message['topic']])) {
+            $this->queue[$message['topic']]->enqueue($message['data']);
+        }
+
+        //消费
+        if(isset($message['model']) && $message['model'] == 'sub' && $message['topic']) {
+            $data = $this->queue[$message['topic']]->dequeue();
 
             $server->push($frame->fd, json_encode($data));
         }

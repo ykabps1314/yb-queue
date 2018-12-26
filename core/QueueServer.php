@@ -47,6 +47,7 @@ class QueueServer {
         }
         $redis     = new RedisTopic($this->config['redis']);
         $allTopics = $redis->getAllTopic();
+        var_dump($allTopics);
 
         foreach ($allTopics as $topic) {
             $queue = new SplQueue();

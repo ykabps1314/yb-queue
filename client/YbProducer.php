@@ -37,6 +37,7 @@ class YbProducer {
         if(!$result) {
             die(socket_strerror(var_export(socket_last_error(), true)));
         }
+        echo '连接成功';
     }
 
     public function setTopic($topic = 'default_topic')

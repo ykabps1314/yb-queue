@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1dae666d-eb96-47b3-8854-9b0a321566f2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/client/YbCustomer.php" beforeDir="false" afterPath="$PROJECT_DIR$/client/YbCustomer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/YbProducer.php" beforeDir="false" afterPath="$PROJECT_DIR$/client/YbProducer.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,12 +33,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="1" />
-          <entry key="php" value="2227" />
+          <entry key="php" value="2240" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PHP" value="2227" />
+          <entry key="PHP" value="2240" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
@@ -79,20 +78,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/YbProducer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+            <state relative-caret-position="447">
+              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/YbCustomer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="884">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="504">
+              <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -130,8 +129,8 @@
         <option value="$PROJECT_DIR$/config/main.php" />
         <option value="$PROJECT_DIR$/core/RedisTopic.php" />
         <option value="$PROJECT_DIR$/core/QueueServer.php" />
-        <option value="$PROJECT_DIR$/client/YbProducer.php" />
         <option value="$PROJECT_DIR$/client/YbCustomer.php" />
+        <option value="$PROJECT_DIR$/client/YbProducer.php" />
       </list>
     </option>
   </component>
@@ -216,12 +215,12 @@
       <updated>1545616780033</updated>
       <workItem from="1545616781291" duration="4019000" />
       <workItem from="1545708534526" duration="6749000" />
-      <workItem from="1545724017044" duration="9166000" />
+      <workItem from="1545724017044" duration="9620000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19934000" />
+    <option name="totallyTimeSpent" value="20388000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1592" y="-8" width="1936" height="1176" extended-state="6" />
@@ -297,17 +296,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/YbProducer.php">
+    <entry file="file://$PROJECT_DIR$/client/YbCustomer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+          <caret line="37" column="5" lean-forward="true" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/YbCustomer.php">
+    <entry file="file://$PROJECT_DIR$/client/YbProducer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="447">
+          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
         </state>
       </provider>
     </entry>

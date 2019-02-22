@@ -1,0 +1,23 @@
+{
+    "name": "yb98k/yb-queue",
+    "description": "a php queue app",
+    "type": "library",
+    "require": {
+        "php": ">=7.0",
+        "ext-json": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "yk",
+            "email": "yb98k@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "core\\": "core//",
+            "consumer\\": "consumer//"
+        }
+    }
+}

@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+include __DIR__ . '/vendor/autoload.php';
+
+$config = require ( __DIR__ . '/config/main.php' );
+
+(new \core\server\QueueServer($config))->run();
